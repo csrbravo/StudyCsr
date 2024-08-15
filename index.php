@@ -15,4 +15,5 @@ class People {
 $people1 = new People('Cesar', 'Bravo');
 $people2 = new People('Jose', 'Perez');
 //
+
 echo "{$people1->fullName()} es amigo de {$people2->fullName()}";
