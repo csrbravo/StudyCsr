@@ -24,6 +24,7 @@ $people2 = new People('Jose', 'Perez');
 </head>
 <body>
 <p><?php echo "{$people1->fullName()} es amigo de {$people2->fullName()}"; ?></p>
-<button onclick="window.location.href='index2.php'">Proximo Ejercicio</button>
+<button onclick="window.location.href='index2.php'">Clase 2</button>
+<button onclick="window.location.href='herencia.php'">Clase 3</button>
 </body>
 </html>
