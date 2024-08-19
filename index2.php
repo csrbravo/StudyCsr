@@ -21,7 +21,6 @@ class People {
     {
         return $this->lastName;
     }
-
     public function setNickname($nickname)
     {
         if ($this->changedNickname >= 2) {
@@ -49,7 +48,7 @@ try {
     $person1 = new People('Cesar', 'Bravo');
     $person1->setNickname('csr');
     $person1->setNickname('csrbravo');
-    $person1->setNickname('csrbravovasquez'); // al comentar esta linea tncs no entra en la excepcion
+    $person1->setNickname('csrbravovasquez');
     echo $person1->getNickname();
     echo $person1->getFullName();
 } catch (Exception $e) {
