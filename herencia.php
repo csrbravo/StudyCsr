@@ -111,8 +111,6 @@ class Archer extends Unit {
         }
     }
 }
-
-
 try {
     $armor = new BronzeArmor();
     $Csr = new Archer('Cesar');
