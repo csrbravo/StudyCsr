@@ -37,12 +37,21 @@ abstract class Unit {
         }
     }
 }
-class Armor {
-    public function absorbDamage(&$damage) {
-        // Example implementation: reduce damage by half
-        $damage /= 2;
+interface Armor
+{
+    public function absorbDamage(&$damage);
+}
+
+class BronzeArmor implements Armor
+{
+    public function absorbDamage(&$damage)
+    {
+        $absorbed = $damage / 5;
+        $damage -= $absorbed;
+        echo "<p>La armadura absorbe {$absorbed} puntos de daño</p>";
     }
 }
+
 
 class Soldier extends Unit {
     protected $damage = 10;
@@ -59,9 +68,6 @@ class Soldier extends Unit {
 
     public function attack($opponent) {
         $damage = $this->damage;
-        if (!is_null($this->armor)) {
-            $this->armor->absorbDamage($damage);
-        }
         $opponent->takeDamage($damage);
         echo "<p>{$this->name} ataca a {$opponent->getName()}</p>";
         echo "<p>{$opponent->getName()} pierde {$damage} puntos de vida</p>";
@@ -69,6 +75,9 @@ class Soldier extends Unit {
     }
 
     public function takeDamage($damage) {
+        if (!is_null($this->armor)) {
+            $this->armor->absorbDamage($damage);
+        }
         if (rand(0, 1)) {
             parent::takeDamage($damage);
         } else {
@@ -76,6 +85,8 @@ class Soldier extends Unit {
         }
     }
 }
+
+
 class Archer extends Unit {
     protected $damage = 20;
 
@@ -101,17 +112,20 @@ class Archer extends Unit {
     }
 }
 
+
 try {
-    $armor = new Armor();
+    $armor = new BronzeArmor();
     $Csr = new Archer('Cesar');
     $Csr->move('el norte');
     $Jose = new Soldier('Jose', $armor);
     $Jose->move('el sur');
     $Csr->attack($Jose);
+    $Jose->setArmor($armor);
     $Csr->attack($Jose);
     $Csr->attack($Jose);
     $Csr->attack($Jose);
     $Csr->attack($Jose);
+    $Jose->attack($Csr);
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
 }
