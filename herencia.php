@@ -1,128 +1,29 @@
 <?php
-abstract class Unit {
-    protected $hp = 50;
-    protected $name;
+require 'src/helpers.php';
+require 'src/Unit.php';
+require 'src/Soldier.php';
+require 'src/Archer.php';
+require 'src/Armor.php';
+require 'src/BronzeArmor.php';
+require 'src/SilverArmor.php';
+require 'src/CursedArmor.php';
 
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-    public function setArmor(Armor $armor = null)
-    {
-        $this->armor = $armor;
-    }
-    public function move($direction)
-    {
-        echo "<p>{$this->name} avanza hacia $direction</p>";
-    }
-
-    public function unitDie()
-    {
-        echo "<p>{$this->name} muere</p>";
-        exit ("<p>Fin del juego</p>");
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    abstract function attack($opponent);
-
-    public function takeDamage($damage)
-    {
-        $this->hp -= $damage;
-        if ($this->hp <= 0) {
-            $this->unitDie();
-        }
-    }
-}
-interface Armor
-{
-    public function absorbDamage(&$damage);
-}
-
-class BronzeArmor implements Armor
-{
-    public function absorbDamage(&$damage)
-    {
-        $absorbed = $damage / 5;
-        $damage -= $absorbed;
-        echo "<p>La armadura absorbe {$absorbed} puntos de daño</p>";
-    }
-}
-
-
-class Soldier extends Unit {
-    protected $damage = 10;
-    protected $armor;
-
-    public function __construct($name, Armor $armor = null) {
-        $this->armor = $armor;
-        parent::__construct($name);
-    }
-
-    public function setArmor(Armor $armor = null) {
-        $this->armor = $armor;
-    }
-
-    public function attack($opponent) {
-        $damage = $this->damage;
-        $opponent->takeDamage($damage);
-        echo "<p>{$this->name} ataca a {$opponent->getName()}</p>";
-        echo "<p>{$opponent->getName()} pierde {$damage} puntos de vida</p>";
-        echo "<p>{$opponent->getName()} tiene {$opponent->hp} puntos de vida</p>";
-    }
-
-    public function takeDamage($damage) {
-        if (!is_null($this->armor)) {
-            $this->armor->absorbDamage($damage);
-        }
-        if (rand(0, 1)) {
-            parent::takeDamage($damage);
-        } else {
-            echo "<p>{$this->name} esquiva el ataque</p>";
-        }
-    }
-}
-
-
-class Archer extends Unit {
-    protected $damage = 20;
-
-    public function attack($opponent)
-    {
-        $opponent->takeDamage($this->damage);
-        echo "<p>{$this->name} ataca a {$opponent->getName()}</p>";
-        echo "<p>{$opponent->getName()} pierde {$this->damage} puntos de vida</p>";
-        echo "<p>{$opponent->getName()} tiene {$opponent->hp} puntos de vida</p>";
-        if ($opponent->hp <= 0) {
-            echo "<p>{$opponent->getName()} ha muerto</p>";
-            $opponent->unitDie();
-        }
-    }
-
-    public function takeDamage($damage)
-    {
-        if (rand(0, 1)) {
-            parent::takeDamage($damage);
-        } else {
-            echo "<p>{$this->name} esquiva el ataque</p>";
-        }
-    }
-}
 try {
-    $armor = new BronzeArmor();
+
     $Csr = new Archer('Cesar');
     $Csr->move('el norte');
-    $Jose = new Soldier('Jose', $armor);
+    $Jose = new Soldier('Jose');
+    $armor = new BronzeArmor();
     $Jose->move('el sur');
     $Csr->attack($Jose);
     $Jose->setArmor($armor);
-    $Csr->attack($Jose);
-    $Csr->attack($Jose);
-    $Csr->attack($Jose);
-    $Csr->attack($Jose);
+    $Jose->attack($Csr);
+    $armor = new CursedArmor();
+    $Csr->setArmor($armor);
+    $Jose->attack($Csr);
+    $Csr->move('el este');
+    $Jose->attack($Csr);
+    $Jose->attack($Csr);
     $Jose->attack($Csr);
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
