@@ -1,10 +1,10 @@
 <?php
 class CursedArmor implements Armor
 {
-    public function absorbDamage(&$damage)
+    public function absorbDamage(&$damage, Unit $unit)
     {
-        $take = $damage * 2;
-        $damage = $take;
-        echo "<p>La armadura duplico los {$take} puntos de daño</p>";
+        $originalDamage = $damage;
+        $damage *= 2;
+        $unit->addMessage("La armadura duplicó los {$originalDamage} puntos de daño a {$damage}");
     }
 }

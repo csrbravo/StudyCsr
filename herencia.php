@@ -9,22 +9,15 @@ require 'src/SilverArmor.php';
 require 'src/CursedArmor.php';
 
 try {
+    $Csr = new Archer('Cesar', new CursedArmor(), 100, 'red');
+    $Jose = new Soldier('Jose', new BronzeArmor(), 100, 'blue');
 
-    $Csr = new Archer('Cesar');
-    $Csr->move('el norte');
-    $Jose = new Soldier('Jose');
-    $armor = new BronzeArmor();
-    $Jose->move('el sur');
+
+    $Jose->attack($Csr);
     $Csr->attack($Jose);
-    $Jose->setArmor($armor);
-    $Jose->attack($Csr);
-    $armor = new CursedArmor();
-    $Csr->setArmor($armor);
-    $Jose->attack($Csr);
-    $Csr->move('el este');
     $Jose->attack($Csr);
     $Jose->attack($Csr);
-    $Jose->attack($Csr);
+
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
 }

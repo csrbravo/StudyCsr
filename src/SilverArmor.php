@@ -1,10 +1,10 @@
 <?php
 class SilverArmor implements Armor
 {
-    public function absorbDamage(&$damage)
+    public function absorbDamage(&$damage, Unit $unit)
     {
-        $absorbed = $damage / 5;
-        $damage -= $absorbed;
-        echo "<p>La armadura absorbe {$absorbed} puntos de daño</p>";
+        $originalDamage = $damage;
+        $damage = max(0, $damage - 3);
+        $unit->addMessage("La armadura de plata redujo el daño de {$originalDamage} a {$damage}");
     }
 }

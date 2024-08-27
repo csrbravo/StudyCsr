@@ -2,32 +2,35 @@
 class Soldier extends Unit {
     protected $damage = 10;
     protected $armor;
+    protected $attackColor;
 
-    public function __construct($name, Armor $armor = null) {
+    public function __construct($name, Armor $armor = null, $hp = 100, $attackColor = 'black') {
+        parent::__construct($name, $hp);
         $this->armor = $armor;
-        parent::__construct($name);
+        $this->attackColor = $attackColor;
     }
 
-    public function setArmor(Armor $armor = null) {
-        $this->armor = $armor;
-    }
-
-    public function attack($opponent) {
-        $damage = $this->damage;
-        $opponent->takeDamage($damage);
-        echo "<p>{$this->name} ataca a {$opponent->getName()}</p>";
-        echo "<p>{$opponent->getName()} pierde {$damage} puntos de vida</p>";
-        echo "<p>{$opponent->getName()} tiene {$opponent->hp} puntos de vida</p>";
-    }
-
-    public function takeDamage($damage) {
-        if (!is_null($this->armor)) {
-            $this->armor->absorbDamage($damage);
+    public function attack($opponent): void {
+        if ($opponent instanceof Unit) {
+            $this->addMessage("{$this->name} ataca a {$opponent->getName()}");
+            $damageCaused = $opponent->takeDamage($this->damage);
+            if ($damageCaused) {
+                $this->addMessage("{$opponent->getName()} pierde {$damageCaused} puntos de vida");
+                $this->addMessage("{$opponent->getName()} tiene {$opponent->getHp()} puntos de vida");
+            }
+            $this->logMessages();
+            $this->logMessages($opponent->getMessages());
         }
-        if (rand(0, 1)) {
-            parent::takeDamage($damage);
-        } else {
-            echo "<p>{$this->name} esquiva el ataque</p>";
+    }
+
+    protected function logMessages($messages = null) {
+        $messagesToLog = $messages ?? $this->getMessages();
+        foreach ($messagesToLog as $message) {
+            $this->logMessage($message);
         }
+    }
+
+    protected function logMessage($message): void {
+        echo "<p style='color: {$this->attackColor};'>{$message}</p>";
     }
 }
