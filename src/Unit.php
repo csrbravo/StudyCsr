@@ -1,37 +1,37 @@
 <?php
 abstract class Unit {
-    protected $hp;
-    protected $name;
-    protected $armor;
-    protected $messages = [];
+    protected int $hp;
+    protected string $name;
+    protected ?Armor $armor;
+    protected array $messages = [];
 
-    public function __construct($name, $hp = 100) {
+    public function __construct(string $name, int $hp = 100) {
         $this->name = $name;
         $this->hp = $hp;
     }
 
-    public function setArmor(Armor $armor = null) {
+    public function setArmor(?Armor $armor = null): void {
         $this->armor = $armor;
     }
 
-    public function move($direction) {
+    public function move(string $direction): void {
         echo "<p>{$this->name} avanza hacia $direction</p>";
     }
 
-    public function unitDie() {
+    public function unitDie(): void {
         echo "<p>{$this->name} muere</p>";
         exit ("<p>Fin del juego</p>");
     }
 
-    public function getName() {
+    public function getName(): string {
         return $this->name;
     }
 
-    public function getHp() {
+    public function getHp(): int {
         return $this->hp;
     }
 
-    abstract function attack($opponent);
+    abstract public function attack(Unit $opponent): void;
 
     public function takeDamage(int $damage): int {
         $originalDamage = $damage;
@@ -46,14 +46,13 @@ abstract class Unit {
         return $actualDamage;
     }
 
-    public function addMessage($message) {
+    public function addMessage(string $message): void {
         $this->messages[] = $message;
     }
 
-    public function getMessages() {
+    public function getMessages(): array {
         $messages = $this->messages;
         $this->messages = [];
         return $messages;
     }
-
 }

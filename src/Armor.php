@@ -1,5 +1,5 @@
 <?php
 interface Armor
 {
-    public function absorbDamage(&$damage, Unit $unit);
+    public function absorbDamage(int &$damage, Unit $unit): void;
 }

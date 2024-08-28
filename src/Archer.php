@@ -1,26 +1,24 @@
 <?php
 class Archer extends Unit {
-    protected $damage = 25;
-    protected $dodgeChance = 0.5;
-    protected $attackColor;
+    protected int $damage = 25;
+    protected float $dodgeChance = 0.5;
+    protected string $attackColor;
 
-    public function __construct($name, Armor $armor = null, $hp = 100, $attackColor = 'blue') {
+    public function __construct(string $name, ?Armor $armor = null, int $hp = 100, string $attackColor = 'blue') {
         parent::__construct($name, $hp);
         $this->armor = $armor;
         $this->attackColor = $attackColor;
     }
 
-    public function attack($opponent): void {
-        if ($opponent instanceof Unit) {
-            $this->addMessage("{$this->name} ataca a {$opponent->getName()}");
-            $damageCaused = $opponent->takeDamage($this->damage);
-            if ($damageCaused) {
-                $this->addMessage("{$opponent->getName()} pierde {$damageCaused} puntos de vida");
-                $this->addMessage("{$opponent->getName()} tiene {$opponent->getHp()} puntos de vida");
-            }
-            $this->logMessages();
-            $this->logMessages($opponent->getMessages());
+    public function attack(Unit $opponent): void {
+        $this->addMessage("{$this->name} ataca a {$opponent->getName()}");
+        $damageCaused = $opponent->takeDamage($this->damage);
+        if ($damageCaused) {
+            $this->addMessage("{$opponent->getName()} pierde {$damageCaused} puntos de vida");
+            $this->addMessage("{$opponent->getName()} tiene {$opponent->getHp()} puntos de vida");
         }
+        $this->logMessages();
+        $this->logMessages($opponent->getMessages());
     }
 
     public function takeDamage(int $damage): int {
@@ -31,14 +29,14 @@ class Archer extends Unit {
         return parent::takeDamage($damage);
     }
 
-    protected function logMessages($messages = null) {
+    protected function logMessages(?array $messages = null): void {
         $messagesToLog = $messages ?? $this->getMessages();
         foreach ($messagesToLog as $message) {
             $this->logMessage($message);
         }
     }
 
-    protected function logMessage($message): void {
+    protected function logMessage(string $message): void {
         echo "<p style='color: {$this->attackColor};'>{$message}</p>";
     }
 }

@@ -1,7 +1,7 @@
 <?php
 class CursedArmor implements Armor
 {
-    public function absorbDamage(&$damage, Unit $unit)
+    public function absorbDamage(&$damage, Unit $unit): void
     {
         $originalDamage = $damage;
         $damage *= 2;

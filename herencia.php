@@ -15,6 +15,7 @@ try {
 
     $Jose->attack($Csr);
     $Csr->attack($Jose);
+    $Csr->move('right');
     $Jose->attack($Csr);
     $Jose->attack($Csr);
 

@@ -1,7 +1,7 @@
 <?php
 class SilverArmor implements Armor
 {
-    public function absorbDamage(&$damage, Unit $unit)
+    public function absorbDamage(int &$damage, Unit $unit): void
     {
         $originalDamage = $damage;
         $damage = max(0, $damage - 3);
