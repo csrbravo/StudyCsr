@@ -1,4 +1,6 @@
 <?php
+
+namespace StudyCsr;
 class SilverArmor implements Armor
 {
     public function absorbDamage(int &$damage, Unit $unit): void

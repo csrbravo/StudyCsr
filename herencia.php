@@ -8,6 +8,12 @@ require 'src/BronzeArmor.php';
 require 'src/SilverArmor.php';
 require 'src/CursedArmor.php';
 
+use StudyCsr\Archer;
+use StudyCsr\Soldier;
+use StudyCsr\BronzeArmor;
+use StudyCsr\CursedArmor;
+
+
 try {
     $Csr = new Archer('Cesar', new CursedArmor(), 100, 'red');
     $Jose = new Soldier('Jose', new BronzeArmor(), 100, 'blue');

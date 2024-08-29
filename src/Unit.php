@@ -1,4 +1,6 @@
 <?php
+
+namespace StudyCsr;
 abstract class Unit {
     protected int $hp;
     protected string $name;

@@ -1,6 +1,8 @@
 <?php
+
+namespace StudyCsr;
 class Archer extends Unit {
-    protected int $damage = 25;
+    protected int $damage = 20;
     protected float $dodgeChance = 0.5;
     protected string $attackColor;
 

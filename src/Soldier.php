@@ -1,4 +1,6 @@
 <?php
+
+namespace StudyCsr;
 class Soldier extends Unit {
     protected int $damage = 10;
     protected ?Armor $armor;

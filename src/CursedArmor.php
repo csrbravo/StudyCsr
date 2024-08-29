@@ -1,4 +1,6 @@
 <?php
+
+namespace StudyCsr;
 class CursedArmor implements Armor
 {
     public function absorbDamage(&$damage, Unit $unit): void
