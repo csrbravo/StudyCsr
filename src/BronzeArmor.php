@@ -1,10 +1,11 @@
 <?php
 
 namespace StudyCsr;
+
 class BronzeArmor implements Armor {
-    public function absorbDamage(&$damage, Unit $unit): void {
-        $originalDamage = $damage;
-        $damage = max(0, $damage / 2);
-        $unit->addMessage("La armadura de bronce redujo el daño de {$originalDamage} a {$damage}");
+    public function absorbDamage(int &$damage, Unit $unit): void {
+        $absorbed = max(0, floor($damage / 2));
+        $damage -= $absorbed;
+        $unit->addMessage("La armadura de bronce absorbe {$absorbed} puntos de daño");
     }
 }

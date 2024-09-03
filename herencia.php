@@ -1,29 +1,30 @@
 <?php
-require 'src/helpers.php';
-require 'src/Unit.php';
-require 'src/Soldier.php';
-require 'src/Archer.php';
-require 'src/Armor.php';
-require 'src/BronzeArmor.php';
-require 'src/SilverArmor.php';
-require 'src/CursedArmor.php';
+require 'vendor/autoload.php';
 
 use StudyCsr\Archer;
-use StudyCsr\Soldier;
 use StudyCsr\BronzeArmor;
-use StudyCsr\CursedArmor;
-
+use StudyCsr\CombatSystem;
+use StudyCsr\Soldier;
+use StudyCsr\Weapons\BasicBow;
+use StudyCsr\Weapons\BasicSword;
 
 try {
-    $Csr = new Archer('Cesar', new CursedArmor(), 100, 'red');
-    $Jose = new Soldier('Jose', new BronzeArmor(), 100, 'blue');
+    $sword = new BasicSword();
+    $bow = new BasicBow();
+    $bronzeArmor = new BronzeArmor();
 
+    $soldier = new Soldier("Csr", $sword, 100);
+    $soldier->setArmor($bronzeArmor);
 
-    $Jose->attack($Csr);
-    $Csr->attack($Jose);
-    $Csr->move('right');
-    $Jose->attack($Csr);
-    $Jose->attack($Csr);
+    $archer = new Archer("Jose", $bow, 80);
+
+    echo "<h1>Combate entre {$soldier->getName()} y {$archer->getName()}</h1>";
+    echo "<p>{$soldier->getName()}: Soldado con {$sword->getDescription()} y armadura de bronce</p>";
+    echo "<p>{$archer->getName()}: Arquero con {$bow->getDescription()}</p>";
+    echo "<hr>";
+
+    $combat = new CombatSystem();
+    $combat->battle($soldier, $archer);
 
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
