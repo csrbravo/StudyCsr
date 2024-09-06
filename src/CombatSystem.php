@@ -4,28 +4,20 @@ namespace StudyCsr;
 
 class CombatSystem {
     public function battle(Unit $unit1, Unit $unit2): void {
-        $round = 1;
+        $currentAttacker = $unit1;
+        $currentDefender = $unit2;
+
         while ($unit1->getHp() > 0 && $unit2->getHp() > 0) {
-            echo "<h3>Ronda {$round}</h3>";
+            $currentAttacker->attack($currentDefender);
+            $this->displayMessages($currentAttacker);
+            $this->displayMessages($currentDefender);
 
-            $unit1->attack($unit2);
-            $this->displayMessages($unit1);
-            $this->displayMessages($unit2);
-
-            if ($unit2->getHp() > 0) {
-                $unit2->attack($unit1);
-                $this->displayMessages($unit2);
-                $this->displayMessages($unit1);
-            }
-
-            echo "<p>{$unit1->getName()}: {$unit1->getHp()} HP | {$unit2->getName()}: {$unit2->getHp()} HP</p>";
-            echo "<hr>";
-
-            $round++;
+            // Swap attacker and defender
+            [$currentAttacker, $currentDefender] = [$currentDefender, $currentAttacker];
         }
 
         $winner = $unit1->getHp() > 0 ? $unit1 : $unit2;
-        echo "<h2>{$winner->getName()} gana la batalla!</h2>";
+        echo "<p>¡{$winner->getName()} ha ganado el combate!</p>";
     }
 
     private function displayMessages(Unit $unit): void {
