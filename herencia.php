@@ -1,22 +1,21 @@
 <?php
 require 'vendor/autoload.php';
 
-use StudyCsr\Archer;
-use StudyCsr\BronzeArmor;
-use StudyCsr\CombatSystem;
-use StudyCsr\Soldier;
+use StudyCsr\Unit;
 use StudyCsr\Weapons\BasicBow;
 use StudyCsr\Weapons\BasicSword;
+use StudyCsr\BronzeArmor;
+use StudyCsr\CombatSystem;
 
 try {
     $sword = new BasicSword();
     $bow = new BasicBow();
     $bronzeArmor = new BronzeArmor();
 
-    $soldier = new Soldier("Csr", $sword, 100);
+    $soldier = new Unit("Csr", $sword, 100);
     $soldier->setArmor($bronzeArmor);
 
-    $archer = new Archer("Jose", $bow, 80);
+    $archer = new Unit("Jose", $bow, 80);
 
     echo "<h1>Combate entre {$soldier->getName()} y {$archer->getName()}</h1>";
     echo "<p>{$soldier->getName()}: Soldado con {$sword->getDescription()} y armadura de bronce</p>";
