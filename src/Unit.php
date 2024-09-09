@@ -2,7 +2,7 @@
 
 namespace StudyCsr;
 
-abstract class Unit {
+class Unit {
     protected int $hp;
     protected string $name;
     protected ?Armor $armor = null;
@@ -37,7 +37,10 @@ abstract class Unit {
     public function getHp(): int { return $this->hp; }
     public function getWeapon(): ?Weapon { return $this->weapon; }
 
-    abstract public function attack(Unit $opponent): void;
+    public function attack(Unit $opponent): void {
+        $damage = $this->weapon->getDamage();
+        $this->dealDamage($opponent, $damage);
+    }
 
     protected function dealDamage(Unit $opponent, int $damage): int {
         if ($this->weapon === null) {
