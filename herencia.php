@@ -6,8 +6,20 @@ use StudyCsr\Weapons\BasicBow;
 use StudyCsr\Weapons\BasicSword;
 use StudyCsr\BronzeArmor;
 use StudyCsr\CombatSystem;
+use StudyCsr\Weapons\Translator;
 
 try {
+
+    $translationsFile = __DIR__ . '/translations.php';
+    if (!file_exists($translationsFile)) {
+        throw new Exception("El archivo de traducciones no existe: $translationsFile");
+    }
+    $translations = require $translationsFile;
+    if (!is_array($translations)) {
+        throw new Exception("El archivo de traducciones no devuelve un array");
+    }
+    Translator::set($translations);
+
     $sword = new BasicSword();
     $bow = new BasicBow();
     $bronzeArmor = new BronzeArmor();
@@ -17,9 +29,9 @@ try {
 
     $archer = new Unit("Jose", $bow, 80);
 
-    echo "<h1>Combate entre {$soldier->getName()} y {$archer->getName()}</h1>";
-    echo "<p>{$soldier->getName()}: Soldado con {$sword->getDescription()} y armadura de bronce</p>";
-    echo "<p>{$archer->getName()}: Arquero con {$bow->getDescription()}</p>";
+    echo "<h1>Combat between {$soldier->getName()} and {$archer->getName()}</h1>";
+    echo "<p>{$soldier->getName()}: Soldier with {$sword->getDescription()} and bronze armor</p>";
+    echo "<p>{$archer->getName()}: Archer with {$bow->getDescription()}</p>";
     echo "<hr>";
 
     $combat = new CombatSystem();
