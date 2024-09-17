@@ -1,9 +1,7 @@
-
 <?php
+require 'vendor/autoload.php';
 
 use StudyCsr\User;
-
-require '../vendor/autoload.php';
 
 $user = new User();
 
