@@ -2,26 +2,26 @@
 
 namespace StudyCsr;
 
-abstract class Modeltwo
+abstract class ModelTwo
 {
-    protected $attributes = [];
+    protected array $attributes = [];
 
     public function __construct(array $attributes = [])
     {
         $this->fill($attributes);
     }
 
-    public function fill(array $attributes = [])
+    public function fill(array $attributes = []): void
     {
         $this->attributes = $attributes;
     }
 
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
 
-    public function getAttribute($name)
+    public function getAttribute(string $name): mixed
     {
         $value = $this->getAttributeValue($name);
 
@@ -32,49 +32,50 @@ abstract class Modeltwo
         return $value;
     }
 
-    protected function hasGetMutator($name)
+    protected function hasGetMutator(string $name): bool
     {
         return method_exists($this, 'get'.$this->studly($name).'Attribute');
     }
 
-    protected function mutateAttribute($name, $value)
+    protected function mutateAttribute(string $name, mixed $value): mixed
     {
         return $this->{'get'.$this->studly($name).'Attribute'}($value);
     }
 
-    public function getAttributeValue($name)
+    public function getAttributeValue(string $name): mixed
     {
         if (array_key_exists($name, $this->attributes)) {
             return $this->attributes[$name];
         }
+        return null;
     }
 
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, mixed $value): void
     {
         $this->attributes[$name] = $value;
     }
 
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
         $this->setAttribute($name, $value);
     }
 
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         return $this->getAttribute($name);
     }
 
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
         return isset($this->attributes[$name]);
     }
 
-    public function __unset($name)
+    public function __unset(string $name): void
     {
-        unset ($this->attributes[$name]);
+        unset($this->attributes[$name]);
     }
 
-    private function studly($value)
+    private function studly(string $value): string
     {
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
         return str_replace(' ', '', $value);

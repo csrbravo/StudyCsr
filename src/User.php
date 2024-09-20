@@ -2,7 +2,7 @@
 
 namespace StudyCsr;
 
-class User extends Modeltwo
+class User extends ModelTwo
 {
     public function getFirstNameAttribute($value)
     {
